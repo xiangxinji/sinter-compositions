@@ -1,5 +1,7 @@
+/**
+ * 处理区间问题 , 如数字 , 数组区间
+ */
 import {computed, reactive, Ref, watch} from "vue";
-
 
 /**
  * 用于数字的界限, 可以用于上一步下一步等等做一些数值判断
