@@ -38,7 +38,7 @@ export function useNumberScope(min: number, max: number, {
     loop = false,
     onChange = null as Function | null,
     onInitState = null as Function | null,
-} = {}): [{ current: number }, {
+} = {}): [{ current: number, min: number, max: number }, {
     next: () => void,
     prev: () => void,
     isMin: Ref<boolean>,
