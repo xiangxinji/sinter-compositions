@@ -33,12 +33,12 @@ State
 
 Context
 
-| 名称  | 类型         | 描述/备注          |
-| ----- | ------------ | ------------------ |
-| next  | Function     | 调用可进行下一个值 |
-| prev  | Function     | 调用可进行上一个值 |
-| isMin | Ref<boolean> | 当前值是否是最小值 |
-| isMax | Ref<boolean> | 当前值是否是最大值 |
+| 名称  | 类型        | 描述/备注          |
+| ----- | ----------- | ------------------ |
+| next  | Function    | 调用可进行下一个值 |
+| prev  | Function    | 调用可进行上一个值 |
+| isMin | Ref>boolean | 当前值是否是最小值 |
+| isMax | Ref>boolean | 当前值是否是最大值 |
 
 示例
 
@@ -99,9 +99,9 @@ Context
 
 | 名称           | 类型                                                | 描述/备注                         |
 | -------------- | --------------------------------------------------- | --------------------------------- |
-| currentCommand | ComputedRef<T>                                      | 当前指令 , 如果没有,则返回null    |
-| isHeader       | ComputedRef<boolean>                                | 当前指令是否是在开头              |
-| isFooter       | ComputedRef<boolean>                                | 当钱指令是否是在结尾              |
+| currentCommand | ComputedRef>T                                       | 当前指令 , 如果没有,则返回null    |
+| isHeader       | ComputedRef>boolean                                 | 当前指令是否是在开头              |
+| isFooter       | ComputedRef>boolean                                 | 当钱指令是否是在结尾              |
 | swapIndex      | Function (targetIndex: number, originIndex: number) | 两个位置交换指令                  |
 | activeIndex    | Function(index:number)                              | 根据索引激活指定指令              |
 | activeCommand  | Function(command : string  \| T )                   | 根据 command 或者指令本身进行激活 |
@@ -124,4 +124,25 @@ const [commandState, {
 }] = useCommands(commands, { defaultIndex: 0 });
 // 这样就可以在template 中调用 activeIndex 或者 swapIndex 去激活对应的指令了 , 如果需要判断还可以使用 isHeader 和 isFooter 
 ```
+
+
+
+
+
+### useBackupData
+
+描述： 用于简单数据的备份，可以使用 reset 进行还原 
+
+传递参数
+
+| 名称 | 类型             | 默认值 | 描述/备注      |
+| ---- | ---------------- | ------ | -------------- |
+| data | T extends object |        | 需要备份的数据 |
+
+返回 [Ref>Data, ResetFunction]
+
+| 名称          | 类型     | 描述/备注                                                    |
+| ------------- | -------- | ------------------------------------------------------------ |
+| data          | Ref>Data | 这个data 是传入进来的data ， 但是进行了 ref 包装，所以使用的时候需要.value 的方式访问实际值 |
+| resetFunction | Function | reset 函数 ，调用这个方法可以使 data 重置回初始值            |
 

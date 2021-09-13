@@ -6,11 +6,11 @@ import {computed, ComputedRef, reactive, ref, Ref, watch} from "vue";
 
 function computedCurrentIndexLoop(isLoop = false, current: number, min: number, max: number): number {
     if (!isLoop) {
-        return current >= max ?
-            max - 1 : (current < min ? min : current)
+        return current > max ?
+            max : (current < min ? min : current)
     } else {
-        return current >= max ?
-            min : (current < min ? max - 1 : current)
+        return current > max ?
+            min : (current < min ? max : current)
     }
 }
 

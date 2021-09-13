@@ -1,13 +1,12 @@
 {
   "name": "sinter-compositions",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
-  "module": "lib/index.ts",
+  "typings": "src/index.ts",
   "scripts": {
     "build": "node build/index.js "
   },
-  "typings": "./type",
   "keywords": [],
   "author": "",
   "license": "ISC",
