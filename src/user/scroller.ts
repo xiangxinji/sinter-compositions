@@ -1,7 +1,7 @@
 /**
  *  处理用户滚动的一些操作
  */
-import {onMounted, reactive, Ref} from "vue";
+import {computed, onMounted, reactive, Ref} from "vue";
 
 
 type ScrollState = {
@@ -11,7 +11,10 @@ type ScrollState = {
 }
 type UseScrollResult = [
     ScrollState, {
+        isVertical: Ref<boolean>,
+        isHorizontal: Ref<boolean>,
         start: () => void
+        stop: () => void
     }
 ]
 
@@ -43,29 +46,48 @@ function createComputedScrollDirective(bTop: number, bLeft: number) {
 }
 
 
-// 给一个容器绑定 scroll 事件 , 并且获取他的一些基本信息
+/**
+ * 将一个容器订阅scroll 事件
+ * @param contain 容器 el
+ * @param observer scroll 数据是否需要响应式
+ * @param immediate 是否在一开始默认执行获取容器和绑定事件
+ */
 export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
     observer = false,
-    immediate = true
+    immediate = true,
+    onScroll = null as Function | null
 } = {}): UseScrollResult {
     const t = {top: 0, left: 0, direction: 'none'}
     const state = (observer ? reactive(t) : t) as ScrollState
+    const isVertical = computed(() => state.direction === 'vertical')
+    const isHorizontal = computed(() => state.direction === 'horizontal')
+    let handler: Function | null = null
+    let container: HTMLElement | null = null
 
     function start() {
         const computedDirection = createComputedScrollDirective(state.top, state.left)
-
         onMounted(() => {
-            const container = querySelector(contain)
+            container = querySelector(contain)
             if (container === null) {
                 return console.warn('[useScroll]:找不到 scroll 容器')
             }
-            container.addEventListener('scroll', (event: Event) => {
+            handler = (event: Event) => {
                 const target = event.target as HTMLElement
                 state.top = target.scrollTop
                 state.left = target.scrollLeft
                 state.direction = computedDirection(state.top, state.left, state.direction)
-            })
+                if (onScroll) {
+                    onScroll(state, event)
+                }
+            }
+            if (handler !== null) {
+                container.addEventListener('scroll', handler as any)
+            }
         })
+    }
+
+    function stop() {
+        if (container && handler) container.removeEventListener('scroll', handler as any)
     }
 
     if (immediate) {
@@ -73,9 +95,13 @@ export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
     }
     return [
         state,
-        {start}
+        {start, stop, isVertical, isHorizontal}
     ]
 }
+
+
+
+
 
 
 
