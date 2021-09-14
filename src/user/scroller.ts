@@ -1,7 +1,7 @@
 /**
  *  处理用户滚动的一些操作
  */
-import {computed, onMounted, reactive, Ref} from "vue";
+import {computed, reactive, Ref} from "vue";
 
 
 type ScrollState = {
@@ -15,16 +15,17 @@ type UseScrollResult = [
         isHorizontal: Ref<boolean>,
         start: () => void
         stop: () => void
+        defineScroll: (callback: Function) => void
     }
 ]
 
 function querySelector(el: Ref<HTMLElement> | HTMLElement | String): HTMLElement | null {
     let result = null as HTMLElement | null
-    if (el instanceof String) {
+    if (typeof el === 'string') {
         result = document.querySelector(el as any)
     } else if (el instanceof HTMLElement) {
         result = el
-    } else result = el.value
+    } else result = (el as Ref<HTMLElement>).value
     if (!result) return null
     return result
 }
@@ -35,10 +36,16 @@ function createComputedScrollDirective(bTop: number, bLeft: number) {
     let beforeLeft = bLeft
 
     function computedDirection(top: number, left: number, beforeDirection: ScrollState["direction"]): ScrollState["direction"] {
-        if (top !== beforeTop) return 'vertical'
-        if (left !== beforeLeft) return 'horizontal'
-        beforeTop = top
-        beforeLeft = left
+        if (top !== beforeTop) {
+            beforeTop = top
+            beforeLeft = left
+            return 'vertical'
+        }
+        if (left !== beforeLeft) {
+            beforeTop = top
+            beforeLeft = left
+            return 'horizontal'
+        }
         return beforeDirection
     }
 
@@ -54,8 +61,7 @@ function createComputedScrollDirective(bTop: number, bLeft: number) {
  */
 export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
     observer = false,
-    immediate = true,
-    onScroll = null as Function | null
+    immediate = false,
 } = {}): UseScrollResult {
     const t = {top: 0, left: 0, direction: 'none'}
     const state = (observer ? reactive(t) : t) as ScrollState
@@ -63,31 +69,35 @@ export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
     const isHorizontal = computed(() => state.direction === 'horizontal')
     let handler: Function | null = null
     let container: HTMLElement | null = null
+    let onScroll: Function | null = null
 
     function start() {
         const computedDirection = createComputedScrollDirective(state.top, state.left)
-        onMounted(() => {
-            container = querySelector(contain)
-            if (container === null) {
-                return console.warn('[useScroll]:找不到 scroll 容器')
+        container = querySelector(contain)
+        console.log(container)
+        if (container === null) {
+            return console.warn('[useScroll]:找不到 scroll 容器')
+        }
+        handler = (event: Event) => {
+            const target = event.target as HTMLElement
+            state.top = target.scrollTop
+            state.left = target.scrollLeft
+            state.direction = computedDirection(state.top, state.left, state.direction)
+            if (onScroll) {
+                onScroll(state, event)
             }
-            handler = (event: Event) => {
-                const target = event.target as HTMLElement
-                state.top = target.scrollTop
-                state.left = target.scrollLeft
-                state.direction = computedDirection(state.top, state.left, state.direction)
-                if (onScroll) {
-                    onScroll(state, event)
-                }
-            }
-            if (handler !== null) {
-                container.addEventListener('scroll', handler as any)
-            }
-        })
+        }
+        if (handler !== null) {
+            container.addEventListener('scroll', handler as any)
+        }
     }
 
     function stop() {
         if (container && handler) container.removeEventListener('scroll', handler as any)
+    }
+
+    function defineScroll(callback: Function) {
+        onScroll = callback
     }
 
     if (immediate) {
@@ -95,7 +105,7 @@ export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
     }
     return [
         state,
-        {start, stop, isVertical, isHorizontal}
+        {start, stop, isVertical, isHorizontal, defineScroll}
     ]
 }
 
