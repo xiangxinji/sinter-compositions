@@ -10,11 +10,16 @@ type CommandsHandlers<T> = {
     currentCommand: ComputedRef<T | null>
     isHeader: ComputedRef<boolean>
     isFooter: ComputedRef<boolean>
-    swapIndex: (targetIndex: number, originIndex: number) => void,
+    swapIndex: (targetIndex: number, originIndex?: number) => void,
     activeIndex: (index: number) => void
     activeCommand: (command: string | T) => void
 }
 
+/**
+ * 指令组 composition
+ * @param commands 指令集合
+ * @param defaultIndex 默认索引
+ */
 export function useCommands<T extends { command: string }>(commands: Array<T> = [], {
     defaultIndex = -1,
     onInitState = null as Function | null,
