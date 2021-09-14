@@ -23,6 +23,7 @@ const output = {
     file: './lib/index.js',
     format: 'umd',
     banner: config.banner,
+    sourcemap : true ,
     globals: {
         vue: 'Vue'
     }
@@ -32,7 +33,6 @@ build({
     ...input, plugins: [
         resolve(config.extensions),
         ts(),
-        terser()
     ],
 }, output)
 

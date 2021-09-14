@@ -2,7 +2,7 @@
  *  处理用户滚动的一些操作
  */
 import {computed, reactive, Ref} from "vue";
-
+import {querySelector} from "../utils/dom";
 
 type ScrollState = {
     top: number
@@ -19,18 +19,8 @@ type UseScrollResult = [
     }
 ]
 
-function querySelector(el: Ref<HTMLElement> | HTMLElement | String): HTMLElement | null {
-    let result = null as HTMLElement | null
-    if (typeof el === 'string') {
-        result = document.querySelector(el as any)
-    } else if (el instanceof HTMLElement) {
-        result = el
-    } else result = (el as Ref<HTMLElement>).value
-    if (!result) return null
-    return result
-}
 
-
+// 计算滚动方向
 function createComputedScrollDirective(bTop: number, bLeft: number) {
     let beforeTop = bTop
     let beforeLeft = bLeft
@@ -108,6 +98,8 @@ export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
         {start, stop, isVertical, isHorizontal, defineScroll}
     ]
 }
+
+
 
 
 
