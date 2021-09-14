@@ -15,4 +15,15 @@ module.exports = {
         '.js',
         '.ts',
     ],
+
+    targets : {
+        default : {
+            sourcemap : true ,
+            terser : false
+        },
+        min : {
+            sourcemap : false ,
+            terser : true
+        }
+    }
 }

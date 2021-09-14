@@ -13,28 +13,36 @@ function build(inputOptions, outputOptions) {
     });
 }
 
-const input = {
-    input: config.input,
-    external: ['vue'],
-}
 
-const output = {
-    name: 'SinterCompositions',
-    file: './lib/index.js',
-    format: 'umd',
-    banner: config.banner,
-    sourcemap : true ,
-    globals: {
-        vue: 'Vue'
+Object.keys(config.targets).forEach(target => {
+    const targetEnv = config.targets[target]
+    const input = {
+        input: config.input,
+        external: ['vue'],
+        plugins: [
+            resolve(config.extensions),
+            ts(),
+        ]
     }
-}
+    const output = {
+        name: 'SinterCompositions',
+        format: 'umd',
+        banner: config.banner,
+        sourcemap: targetEnv.sourcemap || false,
+        globals: {
+            vue: 'Vue'
+        }
+    }
+    if (target === 'default') {
+        output.file = './lib/index.js'
+    } else output.file = './lib/index.' + target + '.js'
+    if (targetEnv.terser) {
+        input.plugins.push(terser())
+    }
+    build(input, output)
+})
 
-build({
-    ...input, plugins: [
-        resolve(config.extensions),
-        ts(),
-    ],
-}, output)
+
 
 
 
