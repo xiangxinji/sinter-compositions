@@ -1,7 +1,7 @@
 {
   "name": "sinter-compositions",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.3",
+  "description": "vue3 composition 工具库",
   "main": "lib/index.js",
   "typings": "src/index.ts",
   "scripts": {
