@@ -16,6 +16,7 @@ function computedCurrentIndexLoop(isLoop = false, current: number, min: number, 
 
 export function useNumberScope(min: number, max: number, {
     loop = false,
+    step = 1,
     onChange = null as Function | null,
     onInitState = null as Function | null,
 } = {}): [{ current: number, min: number, max: number }, {
@@ -36,11 +37,11 @@ export function useNumberScope(min: number, max: number, {
     const isMax = computed(() => state.current === state.max);
 
     function next() {
-        state.current++;
+        state.current += step;
     }
 
     function prev() {
-        state.current--;
+        state.current -= step;
     }
 
     watch(() => state.current, (v) => {
