@@ -10,7 +10,8 @@
 | min                 | number   |        | 区域最小值                                                   |
 | max                 | number   |        | 区域最大值                                                   |
 | options             | Option   | {}     | 其他配置                                                     |
-| options.loop        | boolean  | false  | 是否是循环步骤, 如果是,则会在当前值超过区域值之后自动设为循环值.  比如min =1 , max = 4 , loop = true , 则 current = 5之后自动为0 |
+| options.loop        | boolean  | false  | 是否是循环步骤, 如果是,则会在当前值超过区域值之后自动设为循环值.  比如min =1 , max = 4 , loop = true , 则 current = 5之后自动为1 |
+| options.step        | number  | 1  | next 和 prev 的前进步长 |
 | options.onInitState | Function |        | 当 composition 初始化 state 之后进行触发                     |
 | options.onChange    | Function |        | 当当前步骤改变时进行触发                                     |
 

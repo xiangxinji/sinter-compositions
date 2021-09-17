@@ -57,7 +57,7 @@ Example
 import { useToggle } from "sinter-compositions"
 const [state , toggle ] = useToggle()
 toggle() // state.value = true 
-toggle() // state.value = true 
+toggle() // state.value = false 
 ```
 
 

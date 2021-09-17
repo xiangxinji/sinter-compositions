@@ -1,16 +1,22 @@
 {
   "name": "sinter-compositions",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "vue3 composition 工具库",
   "main": "lib/index.js",
   "typings": "src/index.ts",
   "scripts": {
     "build": "node build/index.js ",
-    "test": "jest",
-    "publish": "npm run test && npm publish"
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "vue",
+    "vue3",
+    "vue-composition",
+    "composition-api",
+    "typescript"
+  ],
+  "author": "向歆纪",
+  "repository": "https://github.com/xiangxinji/sinter-compositions",
   "license": "ISC",
   "peerDependencies": {
     "vue": "^3.0.0"
