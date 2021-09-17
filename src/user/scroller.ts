@@ -1,7 +1,7 @@
 /**
  *  处理用户滚动的一些操作
  */
-import {computed, reactive, Ref} from "vue";
+import {computed, onMounted, reactive, Ref} from "vue";
 import {querySelector} from "../utils/dom";
 
 type ScrollState = {
@@ -90,9 +90,11 @@ export function useScroll(contain: Ref<HTMLElement> | HTMLElement | String, {
         onScroll = callback
     }
 
-    if (immediate) {
-        start()
-    }
+    onMounted(() => {
+        if (immediate) {
+            start()
+        }
+    })
     return [
         state,
         {start, stop, isVertical, isHorizontal, defineScroll}

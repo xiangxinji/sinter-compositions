@@ -1,4 +1,4 @@
-import {reactive} from "vue";
+import {reactive, onMounted} from "vue";
 
 
 // 这个方法只会被执行一次
@@ -25,8 +25,6 @@ export function useToggle(defaultValue ?: boolean, callback ?: Function) {
 
     return [state, toggle] as [typeof state, typeof toggle]
 }
-
-
 
 
 

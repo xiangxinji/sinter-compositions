@@ -13,7 +13,6 @@ export function querySelector(el: Ref<HTMLElement> | HTMLElement | String): HTML
 }
 
 
-
 export function mergeClass(...args: Array<(string | Array<string> | object)>): any {
     const result: any = {};
     args.forEach((name: any) => {

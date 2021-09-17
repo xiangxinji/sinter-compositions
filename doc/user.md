@@ -12,8 +12,6 @@
 | options.observer  | Boolean                                  | fase   | 滚动的数据是否需要响应式处理 |
 | options.immediate | Boolean                                  | false  | 是否在使用时自动进行订阅     |
 
-请注意: 因为在 composition 中不允许定义 onMount 的行为, 所以默认的这个 immedita = false , 大多数情况下请使用此composition 的 start 去手动触发, 否则你就必须确保在 dom 渲染完成之后再使用这个 composition 
-
 **返回[State , Context ]**
 
 State 
