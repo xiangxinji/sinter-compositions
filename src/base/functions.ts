@@ -5,8 +5,9 @@ import {reactive, onMounted} from "vue";
 export function useOnce(callback: Function) {
     let called = false
     return function (...args: Array<any>) {
-        if (!called) return
-        return callback.apply(args)
+        if (called) return
+        callback.apply(args)
+        called = true
     }
 }
 
