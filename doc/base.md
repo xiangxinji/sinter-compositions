@@ -140,3 +140,22 @@ const [commandState, {
 | data          | Ref>Data | 这个data 是传入进来的data ， 但是进行了 ref 包装，所以使用的时候需要.value 的方式访问实际值 |
 | resetFunction | Function | reset 函数 ，调用这个方法可以使 data 重置回初始值            |
 
+
+
+## useEventEmitter 
+描述: 用于创建一个基础的事件通讯 , 功能与 eventEmitter 类似 
+
+传递参数 
+
+| 名称                | 类型    | 默认值 | 描述/备注                                                    |
+| ------------------- | ------- | ------ | ------------------------------------------------------------ |
+| options             | Options |        | 选项, 如下                                                   |
+| options.scopeKey    | string  |        | 从作用域中进行创建,并且把它存至作用域中 可以用于临时存储或者是区域共享 |
+| options.providerKey | string  |        | 如果提供了将会从当前组件中进行 provider                      |
+
+返回 EventEmitter 
+
+返回 EventEmitter 类对象,可以使用 on , emit , off , once 等函数进行事件通讯 
+
+
+
