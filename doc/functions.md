@@ -1,12 +1,10 @@
-# functions 
+# functions
 
-负责一些轻量函数, 功能也更加单一 
+负责一些轻量函数, 功能也更加单一
 
+## useOnce
 
-
-## useOnce 
-
-描述: 可以传递进入一个函数, 这个函数只会被执行一次 
+描述: 可以传递进入一个函数, 这个函数只会被执行一次
 
 传递参数
 
@@ -16,21 +14,20 @@
 
 返回: Function
 
-Example 
+Example
 
 ```ts
-import { useOnce } from "sinter-compositions"
+import {useOnce} from "sinter-compositions"
+
 const call = useOnce(() => {
-  console.log(1)
+    console.log(1)
 })
 // 只执行一次
 call()
 call()
 ```
 
-
-
-## useToggle 
+## useToggle
 
 描述: 模拟一个boolean 的开关功能
 
@@ -49,13 +46,14 @@ State
 | ----- | ------- | ---------- |
 | value | boolean | 目前的状态 |
 
-ToggleFunction 可以直接调用 
+ToggleFunction 可以直接调用
 
-Example 
+Example
 
 ```ts
-import { useToggle } from "sinter-compositions"
-const [state , toggle ] = useToggle()
+import {useToggle} from "sinter-compositions"
+
+const [state, toggle] = useToggle()
 toggle() // state.value = true 
 toggle() // state.value = false 
 ```
