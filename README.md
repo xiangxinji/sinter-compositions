@@ -32,9 +32,7 @@ user : 跟使用的行为有关系,比如滚动监听啊什么的
 
 data : 数据结构
 
-
-API 文档可以去 doc 目录下进行查看
-
+API 文档可以去 doc 目录下进行查看 或者 [GitPages](https://xiangxinji.github.io/sinter-compositions/)
 
 
 
