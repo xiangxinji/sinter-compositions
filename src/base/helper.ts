@@ -22,6 +22,25 @@ export function camelToKebabCase(str: string) {
 }
 
 
+export function resolveLocationSearch(search = window.location.search): any {
+    if (!search) return {};
+    if (search.indexOf("?") === -1) return {};
+    try {
+        const str = search.substring(search.indexOf("?") + 1, search.length);
+        const result = str.split("&").reduce((result, item) => {
+            const arr = item.split("=");
+            if (arr.length === 2) {
+                // @ts-ignore
+                result[arr[0]] = arr[1];
+            }
+            return result;
+        }, {});
+        return result;
+    } catch (e) {
+        return {};
+    }
+}
+
 export function exportFile(res: Blob, name: string) {//二进制文件流导出
     const url = window.URL.createObjectURL(new Blob([res], {type: 'application/vnd.ms-excel;charset=utf-8'}))
     const link = document.createElement('a')
