@@ -1,8 +1,8 @@
 /**
  *  负责状态的一些管理
  */
-import {Ref, ref} from 'vue'
-import {UnwrapRef} from "@vue/reactivity";
+import { Ref, ref } from "vue";
+import { UnwrapRef } from "@vue/reactivity";
 
 
 /**
@@ -12,19 +12,20 @@ import {UnwrapRef} from "@vue/reactivity";
  * Array[1]: reset 方法 , 调用可以将 state 恢复到一开始的状态
  * @param data
  */
-export function useBackupData<T extends object>(data: T): [T extends Ref ? T : Ref<UnwrapRef<T>>, () => void] {
+export function useBackupData<T extends object>(data: T) {
     function deepClone(value: any) {
-        return JSON.parse(JSON.stringify(data))
+        return JSON.parse(JSON.stringify(value));
     }
 
-    const temp = deepClone(data)
-    const state = ref<T>(data)
-    return [
-        state,
-        function reset() {
-            state.value = deepClone(temp)
-        }
-    ]
+    const temp = deepClone(data);
+    const state = ref<T>(data);
+
+    function reset() {
+        state.value = deepClone(temp);
+    }
+
+    const res: [typeof state, typeof reset] = [state, reset];
+    return res;
 }
 
 
