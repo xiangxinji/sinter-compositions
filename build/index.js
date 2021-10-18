@@ -26,7 +26,7 @@ Object.keys(config.targets).forEach(target => {
     }
     const output = {
         name: 'SinterCompositions',
-        format: 'esm',
+        format: 'umd',
         banner: config.banner,
         sourcemap: targetEnv.sourcemap || false,
         globals: {

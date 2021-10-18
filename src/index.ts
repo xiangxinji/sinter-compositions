@@ -7,3 +7,4 @@ export * from "./base/functions"
 export * from "./base/event"
 export * from './data/tree'
 export * from './user/export'
+export * from './user/fetch'

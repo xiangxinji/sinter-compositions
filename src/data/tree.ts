@@ -42,7 +42,7 @@ export function useTree({props = defaultProps} = {}, d: Array<any> = []) {
         })
     }
 
-    function find(key: string) {
+    function find(key: string): null | any {
         let r = null
         each((node: any) => {
             if (node[props.key] === key) return r = node
@@ -66,12 +66,24 @@ export function useTree({props = defaultProps} = {}, d: Array<any> = []) {
         })
     }
 
+    function append(key: string, node: any) {
+        const current = find(key)
+        if (current !== null) {
+            if (!current[props.children] || !Array.isArray(current[props.children])) {
+                current[props.children] = []
+            }
+            current.push(node)
+        }
+    }
+
     const handlers = {
         each,
         find,
         remove,
+        append,
         set
     }
+
     const result: [typeof data, typeof handlers] = [data, handlers]
     return result
 }

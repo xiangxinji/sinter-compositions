@@ -1,9 +1,9 @@
 {
   "name": "sinter-compositions",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "vue3 composition 工具库",
   "main": "lib/index.js",
-  "typings": "src/index.ts",
+  "typings": "types/index.d.ts",
   "scripts": {
     "build": "node build/index.js ",
     "test": "jest"
